@@ -8,6 +8,6 @@ abstract class Contestants {
     abstract int selectLevelQuestion();
     abstract void showQuestionToTest();
     abstract ArrayList inputQuestion();
-    abstract viod showResult();
-    abstract viod saveResult();
+    abstract void showResult();
+    abstract void saveResult();
 }
