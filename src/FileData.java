@@ -4,13 +4,7 @@ import java.util.Scanner;
 
 public class FileData {
 
-//    abstract void redFileOfClassExaminer();
-//    abstract void editFileOfClassExaminer();
-//    abstract void redFileOfClassQuestion();
-//    abstract void editFileOfClassQuestion();
-//    abstract void redFileOfClassContestants();
-//    abstract void editFileOfClassContestants();
-    public String selectionKindOfQuestion(){
+    public String selectionNameFile(){
             String KindOfQuestion = null;
             String levelOfQuestion = null;
             String patchFile;
@@ -26,12 +20,10 @@ public class FileData {
             /*Handle Exception and Invaluable selection*/
             while (true){
                 try {
-                    System.out.println("Input slection: ");
+                    System.out.println("Input selection: ");
                     chose = scanner.nextInt();
                     if(chose >= 1 && chose <= 4){
                         break;
-                    }else{
-                        continue;
                     }
                 }catch (Exception e){
                     System.out.println("Input Invaluable");
@@ -66,8 +58,6 @@ public class FileData {
                     selection = sc.nextInt();
                     if(selection >= 1 && selection <= 3){
                         break;
-                    }else {
-                        continue;
                     }
                 }catch (Exception e){
                     System.out.println("Input Invaluable");
@@ -89,33 +79,14 @@ public class FileData {
             return patchFile;
     }
 
-    public String setPatchFileQuestion(String kindOfQuestion){
+    public String setPatchFile(String kindOfQuestion){
         String patchFile = kindOfQuestion;
-        patchFile = "D:\\Quizz App\\Question\\"+ patchFile + ".txt";
+        patchFile = "D:\\Quiz App\\Question\\"+ patchFile + ".txt";
         return patchFile;
     }
 
-    public void createFile(String patchName) {
-        File file = null;
-        boolean isCreate = false;
-        String patchFile;
-        patchFile = patchName;
-        try{
-            file = new File(patchFile);
-            isCreate = file.createNewFile();
-            if (isCreate)
-                System.out.print("Create File SUCCESS!");
-            else{
-                System.out.print("Create File FAIL!");
-            }
-        }
-        catch (Exception ex){
-                    System.out.print(ex);
-        }
-    }
-
     public ArrayList<Question> readFilesQuestion(String patchFile){
-        ArrayList<Question> listQuestion = new ArrayList<Question>();
+        ArrayList<Question> listQuestion = new ArrayList<>();
         try {
             FileInputStream file = new FileInputStream(patchFile);
             ObjectInputStream objectQuestion = new ObjectInputStream(file);
@@ -131,34 +102,30 @@ public class FileData {
     }
 
     public String[] getAnswerFromFileQuestion(ArrayList<Question> questionArrayList){
-        ArrayList<Question> questions = new ArrayList<Question>();
+        ArrayList<Question> questions;
         questions = questionArrayList;
         String[] answer = new String[questions.size()];
         for(int i = 0; i < questions.size(); i++){
-            Question question = new Question();
-            question = questions.get(i);
+            Question question = questions.get(i);
             if(question.getAnswerA().equalsIgnoreCase(question.getKeyAnswer())){
                 answer[i] = (i+1)+".A";
                 continue;
             }
             if(question.getAnswerB().equalsIgnoreCase(question.getKeyAnswer())){
                 answer[i] = (i+1)+".B";
-                continue;
             }
             if(question.getAnswerC().equalsIgnoreCase(question.getKeyAnswer())){
                 answer[i] = (i+1)+".C";
-                continue;
             }
             if(question.getAnswerD().equalsIgnoreCase(question.getKeyAnswer())){
                 answer[i] = (i+1)+".D";
-                continue;
             }
         }
         return answer;
     }
 
     public ArrayList<Contestants> readFileResult(String patchFile){
-        ArrayList<Contestants> resultTest = new ArrayList<Contestants>();
+        ArrayList<Contestants> resultTest = new ArrayList<>();
         try{
             FileInputStream fileResultInput = new FileInputStream(patchFile);
             ObjectInputStream objectContestants = new ObjectInputStream(fileResultInput);
@@ -174,14 +141,13 @@ public class FileData {
     }
 
     public void saveFileResult(String patchFile, ArrayList<Contestants> listResult){
-        ArrayList<Contestants> listResults = new ArrayList<Contestants>();
-        listResults = listResult;
+
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(patchFile);
             ObjectOutputStream writeObject = new ObjectOutputStream(fileOutputStream);
-            for (int i = 0; i < listResults.size(); i++){
-                Contestants contestants = listResults.get(i);
+            for (int i = 0; i < listResult.size(); i++){
+                Contestants contestants = listResult.get(i);
                 writeObject.writeObject(contestants);
             }
             writeObject.close();
@@ -192,6 +158,23 @@ public class FileData {
         }
 
     }
+
+    public ArrayList<Examiner> readFileExaminer(){
+        ArrayList<Examiner> examiners = new ArrayList<Examiner>();
+        try {
+            FileInputStream fileExaminer = new FileInputStream("D:\\Quiz App\\Examiner\\Examiner.txt");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileExaminer);
+            while (fileExaminer.available() > 0){
+                Examiner examiner = (Examiner) objectInputStream.readObject();
+                examiners.add(examiner);
+            }
+            fileExaminer.close();
+        }catch (Exception e){
+            System.out.println("File Examiner.txt Not Found!");
+        }
+        return examiners;
+    }
+
 
 }
 

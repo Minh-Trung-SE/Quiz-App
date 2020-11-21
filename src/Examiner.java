@@ -2,19 +2,32 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Examiner {
-    private String nameExaminer;
-    private String passWord;
+class Examiner implements Serializable{
+    private String username;
+    private String password;
 
-    public Examiner() {
+    public Examiner() {}
 
+    public Examiner(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-//    abstract void logIn(); /*extend method*/
-//    abstract void updateQuestion();
-//    abstract void showResultQuizzes();
-//    abstract void filterResultQuizzes();
-//    abstract void deleteResultQuizzes();
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public void addFileQuestion() {
         String idQuestion;
@@ -32,7 +45,7 @@ class Examiner {
         FileData fileData = new FileData();
 
         try {
-            FileOutputStream file = new FileOutputStream(fileData.setPatchFileQuestion(fileData.selectionKindOfQuestion()));
+            FileOutputStream file = new FileOutputStream(fileData.setPatchFile(fileData.selectionNameFile()));
             ObjectOutputStream writeQuestion = new ObjectOutputStream(file);
             while (true) {
                 System.out.println("Input ID Question: ");
@@ -90,16 +103,11 @@ class Examiner {
         }
     }
 
-    public Examiner(String nameExaminer, String passWord) {
-        this.nameExaminer = nameExaminer;
-        this.passWord = passWord;
-    }
-
     public void showResult(){
         FileData fileData = new FileData();
         ArrayList<Contestants> arrayListResult = new ArrayList<Contestants>();
         System.out.println("Selection kind of Question to show result!");
-        String patchFile = fileData.selectionKindOfQuestion();
+        String patchFile = fileData.selectionNameFile();
         patchFile = "D:\\Quizz App\\Result\\"+ patchFile + ".txt";
         arrayListResult = fileData.readFileResult(patchFile);
         System.out.println("\nResult Quizzes:");
@@ -111,7 +119,8 @@ class Examiner {
     public void getMaxResult(){
         String patchFile;
         FileData fileData = new FileData();
-        patchFile = fileData.selectionKindOfQuestion();
+        System.out.println("Selection Type Question to find max result!");
+        patchFile = fileData.selectionNameFile();
         patchFile = "D:\\Quizz App\\Result\\"+ patchFile + ".txt";
         ArrayList<Contestants> contestants = new ArrayList<Contestants>();
         contestants = fileData.readFileResult(patchFile);
@@ -129,10 +138,12 @@ class Examiner {
             System.out.println("File not Found");
         }
     }
+
     public void getMinResult(){
         String patchFile;
         FileData fileData = new FileData();
-        patchFile = fileData.selectionKindOfQuestion();
+        System.out.println("Selection Type Question to find min result!");
+        patchFile = fileData.selectionNameFile();
         patchFile = "D:\\Quizz App\\Result\\"+ patchFile + ".txt";
         ArrayList<Contestants> contestants = new ArrayList<Contestants>();
         contestants = fileData.readFileResult(patchFile);
@@ -143,15 +154,11 @@ class Examiner {
                 contestants1 = contestant;
             }
         }
-        System.out.println("Max score: ");
+        System.out.println("Min score: ");
         System.out.println(contestants1.toString());
     }
-    public void updateExaminer() {
-        //File array list store user name and password;
-        // add Examiner
-        // edit Examiner
-        // delete Examiner
 
+    public void updateExaminer() {
         String nameExaminer;
         String passWord;
         Scanner scanner = new Scanner(System.in);
@@ -162,10 +169,54 @@ class Examiner {
         Examiner examiner = new Examiner(nameExaminer, passWord);
     }
 
+    public void addExaminer(){
+        System.out.println("Warning: all old accounts will be disappear and replace by this account.");
+        String username;
+        String password;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input username:");
+        username = sc.nextLine();
+        System.out.println("Input password:");
+        password = sc.nextLine();
+        try{
+            FileOutputStream fileOutputStream = new FileOutputStream("D:\\Quizz App\\Examiner\\Examiner.txt");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            Examiner examiner = new Examiner(username, password);
+            objectOutputStream.writeObject(examiner);
+            fileOutputStream.close();
+            System.out.println("Create user Admin SUCCESS!");
+        }catch (Exception e){
+            System.out.println("Can't create File Examiner.txt");
+        }
+    }
     public void logIn() {
-        //Read file
-        //Loop check logIn
+        String username;
+        String password;
+        boolean loop = true;
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Examiner> examiners = new ArrayList<Examiner>();
+        FileData fileData = new FileData();
+        examiners = fileData.readFileExaminer();
+        while (loop){
+            System.out.print("Username: ");
+            username = sc.nextLine();
+            System.out.print("Password: ");
+            password = sc.nextLine();
+            for (Examiner examiner: examiners) {
+                if (username.equals(examiner.getUsername()) && password.equals(examiner.password)){
+                    System.out.println("LogIn SUCCESS!");
+                    loop = false;
+                    break;
+                }
+            }
+        }
     }
 
-
+    @Override
+    public String toString() {
+        return "Examiner{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

@@ -95,9 +95,9 @@ class Contestants implements Serializable {
         return result;
     }
 
-    public void saveResult(String nameContestants, String result, float score, String choseQuestion){
+    public void saveResult(String nameContestants, String result, float score, String nameFile){
         ArrayList<Contestants> resultArray = new ArrayList<Contestants>();
-        String patchFile = choseQuestion;
+        String patchFile = nameFile;
         patchFile = "D:\\Quizz App\\Result\\"+ patchFile + ".txt";
         FileData fileData = new FileData();
         resultArray = fileData.readFileResult(patchFile);
@@ -110,7 +110,7 @@ class Contestants implements Serializable {
     public String toString() {
         return  "Name: " + nameContestants +
                 "\nScore: " + score +
-                "\nResult: " + result + "\n";
+                "\nResult:\n" + result + "\n";
     }
 
     public String getNameContestants() {
