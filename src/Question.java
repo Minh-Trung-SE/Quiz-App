@@ -1,18 +1,25 @@
-public class Question {
-    private int levelQuestion;
-    private String question;
+import java.io.Serializable;
+
+public class Question implements Serializable {
+
     private String idQuestion;
+    private String question;
     private String answerA;
     private String answerB;
     private String answerC;
     private String answerD;
     private String keyAnswer;
+
+    public Question() {
+
+    }
+
     public enum kindOfQuestion {
         CSS, JAVA, HTML, PYTHON
     }
 
     public enum levelQuestion {
-        BEGINNER,
+        BASIC, MEDIUM, HIGH
     }
 
     public Question(String idQuestion, String question, String answerA, String answerB, String answerC, String answerD, String keyAnswer) {
@@ -23,14 +30,6 @@ public class Question {
         this.answerC = answerC;
         this.answerD = answerD;
         this.keyAnswer = keyAnswer;
-    }
-
-    public int getLevelQuestion() {
-        return levelQuestion;
-    }
-
-    public void setLevelQuestion(int levelQuestion) {
-        this.levelQuestion = levelQuestion;
     }
 
     public String getQuestion() {
@@ -79,6 +78,27 @@ public class Question {
 
     public void setKeyAnswer(String keyAnswer) {
         this.keyAnswer = keyAnswer;
+    }
+
+
+    public String showQuestion() {
+        return  "ID Question: " + idQuestion +
+                "\n" + question +
+                "\n\t A: " + answerA +
+                "\n\t B: " + answerB +
+                "\n\t C: " + answerC +
+                "\n\t D: " + answerD;
+    }
+
+    @Override
+    public String toString() {
+        return "ID Question:" + idQuestion +
+        "\nQuestion: " + question +
+                "\n\t A: " + answerA +
+                "\n\t B: " + answerB +
+                "\n\t C: " + answerC +
+                "\n\t D: " + answerD +
+                "\n\t Answer: " +keyAnswer+"\n";
     }
 }
 
