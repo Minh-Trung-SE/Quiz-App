@@ -17,18 +17,6 @@ class Examiner implements Serializable{
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public void addFileQuestion() {
         String idQuestion;
         String question;
@@ -45,7 +33,7 @@ class Examiner implements Serializable{
         FileData fileData = new FileData();
 
         try {
-            FileOutputStream file = new FileOutputStream(fileData.setPatchFile(fileData.selectionNameFile()));
+            FileOutputStream file = new FileOutputStream(fileData.setPatchFileQuestion(fileData.selectionNameFile()));
             ObjectOutputStream writeQuestion = new ObjectOutputStream(file);
             while (true) {
                 System.out.println("Input ID Question: ");
@@ -105,11 +93,11 @@ class Examiner implements Serializable{
 
     public void showResult(){
         FileData fileData = new FileData();
-        ArrayList<Contestants> arrayListResult = new ArrayList<Contestants>();
+
         System.out.println("Selection kind of Question to show result!");
         String patchFile = fileData.selectionNameFile();
-        patchFile = "D:\\Quizz App\\Result\\"+ patchFile + ".txt";
-        arrayListResult = fileData.readFileResult(patchFile);
+        patchFile = "D:\\Quiz App\\Result\\"+ patchFile + ".txt";
+        ArrayList<Contestants> arrayListResult = fileData.readFileResult(patchFile);
         System.out.println("\nResult Quizzes:");
         for (Contestants contestants: arrayListResult) {
             System.out.println(contestants.toString());
@@ -121,9 +109,8 @@ class Examiner implements Serializable{
         FileData fileData = new FileData();
         System.out.println("Selection Type Question to find max result!");
         patchFile = fileData.selectionNameFile();
-        patchFile = "D:\\Quizz App\\Result\\"+ patchFile + ".txt";
-        ArrayList<Contestants> contestants = new ArrayList<Contestants>();
-        contestants = fileData.readFileResult(patchFile);
+        patchFile = "D:\\Quiz App\\Result\\"+ patchFile + ".txt";
+        ArrayList<Contestants> contestants = fileData.readFileResult(patchFile);
         try {
             Contestants contestants1 = contestants.get(0);
             for (Contestants contestant:
@@ -144,9 +131,8 @@ class Examiner implements Serializable{
         FileData fileData = new FileData();
         System.out.println("Selection Type Question to find min result!");
         patchFile = fileData.selectionNameFile();
-        patchFile = "D:\\Quizz App\\Result\\"+ patchFile + ".txt";
-        ArrayList<Contestants> contestants = new ArrayList<Contestants>();
-        contestants = fileData.readFileResult(patchFile);
+        patchFile = "D:\\Quiz App\\Result\\"+ patchFile + ".txt";
+        ArrayList<Contestants> contestants = fileData.readFileResult(patchFile);
         Contestants contestants1 = contestants.get(0);
         for (Contestants contestant:
                 contestants) {
@@ -156,17 +142,6 @@ class Examiner implements Serializable{
         }
         System.out.println("Min score: ");
         System.out.println(contestants1.toString());
-    }
-
-    public void updateExaminer() {
-        String nameExaminer;
-        String passWord;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Input name of Examiner: ");
-        nameExaminer = scanner.nextLine();
-        System.out.println("Input password of Examiner: ");
-        passWord = scanner.nextLine();
-        Examiner examiner = new Examiner(nameExaminer, passWord);
     }
 
     public void addExaminer(){
@@ -179,7 +154,7 @@ class Examiner implements Serializable{
         System.out.println("Input password:");
         password = sc.nextLine();
         try{
-            FileOutputStream fileOutputStream = new FileOutputStream("D:\\Quizz App\\Examiner\\Examiner.txt");
+            FileOutputStream fileOutputStream = new FileOutputStream("D:\\Quiz App\\Examiner\\Examiner.txt");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             Examiner examiner = new Examiner(username, password);
             objectOutputStream.writeObject(examiner);
@@ -189,14 +164,15 @@ class Examiner implements Serializable{
             System.out.println("Can't create File Examiner.txt");
         }
     }
+
     public void logIn() {
         String username;
         String password;
         boolean loop = true;
         Scanner sc = new Scanner(System.in);
-        ArrayList<Examiner> examiners = new ArrayList<Examiner>();
+
         FileData fileData = new FileData();
-        examiners = fileData.readFileExaminer();
+        ArrayList<Examiner> examiners = fileData.readFileExaminer();
         while (loop){
             System.out.print("Username: ");
             username = sc.nextLine();

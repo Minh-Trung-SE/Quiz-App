@@ -10,18 +10,6 @@ public class Question implements Serializable {
     private String answerD;
     private String keyAnswer;
 
-    public Question() {
-
-    }
-
-    public enum kindOfQuestion {
-        CSS, JAVA, HTML, PYTHON
-    }
-
-    public enum levelQuestion {
-        BASIC, MEDIUM, HIGH
-    }
-
     public Question(String idQuestion, String question, String answerA, String answerB, String answerC, String answerD, String keyAnswer) {
         this.idQuestion = idQuestion;
         this.question = question;

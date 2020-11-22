@@ -15,6 +15,7 @@ public class Menu {
         Examiner examiner = new Examiner();
         FileData fileData = new FileData();
         Contestants contestants = new Contestants();
+
         while (true){
             System.out.println("1. Admin");
             System.out.println("2. Use");
@@ -63,9 +64,7 @@ public class Menu {
                             default:
                                 break;
                         }
-                        if (selectionLogin == 0){
-                            break;
-                        }
+                        break;
                     }
                     break;
                 case 2:
@@ -73,13 +72,13 @@ public class Menu {
                         System.out.println("Begin");
                         nameContestants = contestants.inputNameContestant();
                         nameFile = fileData.selectionNameFile();
-                        contestants.showQuestionToTest(fileData.setPatchFile(nameFile));
+                        contestants.showQuestionToTest(fileData.setPatchFileQuestion(nameFile));
                         answer = contestants.inputQuestion();
-                        score = contestants.handleScore(fileData.setPatchFile(nameFile),answer);
-                        result = contestants.showCorrectAnswer(fileData.setPatchFile(nameFile), answer);
+                        score = contestants.handleScore(fileData.setPatchFileQuestion(nameFile),answer);
+                        result = contestants.showCorrectAnswer(fileData.setPatchFileQuestion(nameFile), answer);
 
                         while (true){
-                            System.out.println("Finish Quiz!");
+                            System.out.println("Select option to continue!");
                             System.out.println("1. Show score");
                             System.out.println("2. Do quiz again");
                             System.out.println("3. Show correct answer");
@@ -99,7 +98,7 @@ public class Menu {
                                     System.out.println("Attempt Quiz Again!");
                                     break;
                                 case 3:
-                                    System.out.println(contestants.showCorrectAnswer(fileData.setPatchFile(nameFile), answer));
+                                    System.out.println(contestants.showCorrectAnswer(fileData.setPatchFileQuestion(nameFile), answer));
                                     break;
                                 case 4:
                                     contestants.saveResult(nameContestants,result,score,nameFile);
@@ -107,7 +106,6 @@ public class Menu {
                                 default:
                                     break;
                             }
-
                             if(selectionUser == 0){
                                 break;
                             }

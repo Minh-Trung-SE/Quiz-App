@@ -79,7 +79,7 @@ public class FileData {
             return patchFile;
     }
 
-    public String setPatchFile(String kindOfQuestion){
+    public String setPatchFileQuestion(String kindOfQuestion){
         String patchFile = kindOfQuestion;
         patchFile = "D:\\Quiz App\\Question\\"+ patchFile + ".txt";
         return patchFile;
@@ -141,13 +141,10 @@ public class FileData {
     }
 
     public void saveFileResult(String patchFile, ArrayList<Contestants> listResult){
-
-
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(patchFile);
             ObjectOutputStream writeObject = new ObjectOutputStream(fileOutputStream);
-            for (int i = 0; i < listResult.size(); i++){
-                Contestants contestants = listResult.get(i);
+            for (Contestants contestants : listResult) {
                 writeObject.writeObject(contestants);
             }
             writeObject.close();
@@ -160,7 +157,7 @@ public class FileData {
     }
 
     public ArrayList<Examiner> readFileExaminer(){
-        ArrayList<Examiner> examiners = new ArrayList<Examiner>();
+        ArrayList<Examiner> examiners = new ArrayList<>();
         try {
             FileInputStream fileExaminer = new FileInputStream("D:\\Quiz App\\Examiner\\Examiner.txt");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileExaminer);
@@ -174,8 +171,6 @@ public class FileData {
         }
         return examiners;
     }
-
-
 }
 
 
