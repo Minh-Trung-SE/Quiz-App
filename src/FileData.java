@@ -153,7 +153,21 @@ public class FileData {
         }catch (Exception e){
             System.out.println("An error occur");
         }
+    }
 
+    public void saveFileQuestion(String patchFile, ArrayList<Question> listQuestion){
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(patchFile);
+            ObjectOutputStream writeObject = new ObjectOutputStream(fileOutputStream);
+            for (Question q : listQuestion) {
+                writeObject.writeObject(q);
+            }
+            writeObject.close();
+            fileOutputStream.close();
+            System.out.println("Save result SUCCESS!");
+        }catch (Exception e){
+            System.out.println("An error occur");
+        }
     }
 
     public ArrayList<Examiner> readFileExaminer(){

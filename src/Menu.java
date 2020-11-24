@@ -15,6 +15,7 @@ public class Menu {
         Examiner examiner = new Examiner();
         FileData fileData = new FileData();
         Contestants contestants = new Contestants();
+//        examiner.addFileQuestion();
 
         while (true){
             System.out.println("1. Admin");
@@ -37,6 +38,7 @@ public class Menu {
                         System.out.println("3. Show max result");
                         System.out.println("4. Show min result");
                         System.out.println("5. Add admin");
+                        System.out.println("6. Edit file Question");
                         System.out.println("0. Exit");
                         System.out.print("Input selection: ");
                         try {
@@ -61,6 +63,8 @@ public class Menu {
                             case 5:
                                 examiner.addExaminer();
                                 break;
+                            case 6:
+                                examiner.editFileQuestion();
                             default:
                                 break;
                         }
@@ -83,6 +87,7 @@ public class Menu {
                             System.out.println("2. Do quiz again");
                             System.out.println("3. Show correct answer");
                             System.out.println("4. Save result");
+                            System.out.println("5. Do another quiz");
                             System.out.println("0. Exit");
                             try {
                                 selectionUser = sc.nextByte();
@@ -102,6 +107,14 @@ public class Menu {
                                     break;
                                 case 4:
                                     contestants.saveResult(nameContestants,result,score,nameFile);
+                                    break;
+                                case 5:
+                                    nameContestants = contestants.inputNameContestant();
+                                    nameFile = fileData.selectionNameFile();
+                                    contestants.showQuestionToTest(fileData.setPatchFileQuestion(nameFile));
+                                    answer = contestants.inputQuestion();
+                                    score = contestants.handleScore(fileData.setPatchFileQuestion(nameFile),answer);
+                                    result = contestants.showCorrectAnswer(fileData.setPatchFileQuestion(nameFile), answer);
                                     break;
                                 default:
                                     break;

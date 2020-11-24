@@ -188,6 +188,92 @@ class Examiner implements Serializable{
         }
     }
 
+    public void editFileQuestion(){
+        FileData fileData = new FileData();
+        Question question = new Question();
+        Question questionAdd;
+        String patchFile;
+        Scanner sc = new Scanner(System.in);
+        byte selection;
+        byte number;
+        ArrayList<Question> listQuestion = new ArrayList<>();
+        while (true){
+            patchFile = fileData.setPatchFileQuestion(fileData.selectionNameFile());
+            listQuestion = fileData.readFilesQuestion(patchFile);
+            while (true){
+                System.out.println("1. Add Question");
+                System.out.println("2. Delete Question");
+                System.out.println("3. Save");
+                System.out.println("0. Exit");
+                try {
+                    selection = sc.nextByte();
+                }catch (Exception e){
+                    selection = 0;
+                }
+                while (true){
+                    switch (selection){
+                        case 1:
+                            System.out.println("Input number question to add");
+                            while (true){
+                                try {
+                                    number = sc.nextByte();
+                                }catch (Exception e){
+                                    number = 0;
+
+                                }
+                                break;
+                            }
+                            for(int i = 0; i < number; i++){
+                                System.out.println("Input Question " + (i + 1) +": ");
+                                questionAdd = question.addQuestion();
+                                listQuestion.add(questionAdd);
+                            }
+                            for (Question q: listQuestion){
+                                System.out.println(q.toString());
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Input index question to delete");
+                            while (true){
+                                try {
+                                    number = sc.nextByte();
+                                    number = (byte) (number - 1);
+                                    if(number < 0){
+                                        break;
+                                    }
+                                }catch (Exception e){
+                                    number = 0;
+
+                                }
+                                listQuestion.remove(number);
+                                break;
+                            }
+                            break;
+                        case 3:
+                            fileData.saveFileQuestion(patchFile, listQuestion);
+                            break;
+                        default:
+                            break;
+                    }
+                    System.out.println("1. Add Question");
+                    System.out.println("2. Delete Question");
+                    System.out.println("3. Save");
+                    System.out.println("0. Exit");
+                    try {
+                        selection = sc.nextByte();
+                    }catch (Exception e){
+                        selection = 0;
+                    }
+                    if (selection == 0){
+                        break;
+                    }
+                }
+                break;
+            }
+
+        }
+    }
+
     @Override
     public String toString() {
         return "Examiner{" +
