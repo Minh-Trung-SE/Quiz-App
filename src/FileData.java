@@ -81,7 +81,7 @@ public class FileData {
 
     public String setPatchFileQuestion(String kindOfQuestion){
         String patchFile = kindOfQuestion;
-        patchFile = "D:\\Quiz App\\Question\\"+ patchFile + ".txt";
+        patchFile = "D:\\Quiz-App\\Question\\"+ patchFile + ".txt";
         return patchFile;
     }
 
@@ -173,7 +173,7 @@ public class FileData {
     public ArrayList<Examiner> readFileExaminer(){
         ArrayList<Examiner> examiners = new ArrayList<>();
         try {
-            FileInputStream fileExaminer = new FileInputStream("D:\\Quiz App\\Examiner\\Examiner.txt");
+            FileInputStream fileExaminer = new FileInputStream("D:\\Quiz-App\\Examiner\\Examiner.txt");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileExaminer);
             while (fileExaminer.available() > 0){
                 Examiner examiner = (Examiner) objectInputStream.readObject();

@@ -96,7 +96,7 @@ class Examiner implements Serializable{
 
         System.out.println("Selection kind of Question to show result!");
         String patchFile = fileData.selectionNameFile();
-        patchFile = "D:\\Quiz App\\Result\\"+ patchFile + ".txt";
+        patchFile = "D:\\Quiz-App\\Result\\"+ patchFile + ".txt";
         ArrayList<Contestants> arrayListResult = fileData.readFileResult(patchFile);
         System.out.println("\nResult Quizzes:");
         for (Contestants contestants: arrayListResult) {
