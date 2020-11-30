@@ -2,11 +2,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Examiner implements Serializable{
+class Examiner implements Serializable {
     private String username;
     private String password;
 
-    public Examiner() {}
+    public Examiner() {
+    }
 
     public Examiner(String username, String password) {
         this.username = username;
@@ -49,22 +50,22 @@ class Examiner implements Serializable{
                 answerC = sc.nextLine();
                 System.out.println("Input answer D: ");
                 answerD = sc.nextLine();
-                while (true){
+                while (true) {
                     System.out.println("Input key answer: ");
                     keyAnswer = sc.nextLine();
-                    if(keyAnswer.equalsIgnoreCase("A")){
+                    if (keyAnswer.equalsIgnoreCase("A")) {
                         keyAnswer = answerA;
                         break;
                     }
-                    if(keyAnswer.equalsIgnoreCase("B")){
+                    if (keyAnswer.equalsIgnoreCase("B")) {
                         keyAnswer = answerB;
                         break;
                     }
-                    if(keyAnswer.equalsIgnoreCase("C")){
+                    if (keyAnswer.equalsIgnoreCase("C")) {
                         keyAnswer = answerC;
                         break;
                     }
-                    if(keyAnswer.equalsIgnoreCase("D")){
+                    if (keyAnswer.equalsIgnoreCase("D")) {
                         keyAnswer = answerD;
                         break;
                     }
@@ -75,7 +76,7 @@ class Examiner implements Serializable{
                 System.out.println("Continue add question Yes = 1 / No = 0? ");
                 try {
                     choseContinue = scanner.nextInt();
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("Input is a exception default save file and end function");
                     choseContinue = 0;
                 }
@@ -91,52 +92,52 @@ class Examiner implements Serializable{
         }
     }
 
-    public void showResult(){
+    public void showResult() {
         FileData fileData = new FileData();
 
         System.out.println("Selection kind of Question to show result!");
         String patchFile = fileData.selectionNameFile();
-        patchFile = "D:\\Quiz-App\\Result\\"+ patchFile + ".txt";
+        patchFile = "D:\\Quiz-App\\Result\\" + patchFile + ".txt";
         ArrayList<Contestants> arrayListResult = fileData.readFileResult(patchFile);
         System.out.println("\nResult Quizzes:");
-        for (Contestants contestants: arrayListResult) {
+        for (Contestants contestants : arrayListResult) {
             System.out.println(contestants.toString());
         }
     }
 
-    public void getMaxResult(){
+    public void getMaxResult() {
         String patchFile;
         FileData fileData = new FileData();
         System.out.println("Selection Type Question to find max result!");
         patchFile = fileData.selectionNameFile();
-        patchFile = "D:\\Quiz App\\Result\\"+ patchFile + ".txt";
+        patchFile = "D:\\Quiz App\\Result\\" + patchFile + ".txt";
         ArrayList<Contestants> contestants = fileData.readFileResult(patchFile);
         try {
             Contestants contestants1 = contestants.get(0);
-            for (Contestants contestant:
+            for (Contestants contestant :
                     contestants) {
-                if(contestant.getScore() > contestants1.getScore()){
+                if (contestant.getScore() > contestants1.getScore()) {
                     contestants1 = contestant;
                 }
             }
             System.out.println("Max score: ");
             System.out.println(contestants1.toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("File not Found");
         }
     }
 
-    public void getMinResult(){
+    public void getMinResult() {
         String patchFile;
         FileData fileData = new FileData();
         System.out.println("Selection Type Question to find min result!");
         patchFile = fileData.selectionNameFile();
-        patchFile = "D:\\Quiz App\\Result\\"+ patchFile + ".txt";
+        patchFile = "D:\\Quiz App\\Result\\" + patchFile + ".txt";
         ArrayList<Contestants> contestants = fileData.readFileResult(patchFile);
         Contestants contestants1 = contestants.get(0);
-        for (Contestants contestant:
+        for (Contestants contestant :
                 contestants) {
-            if(contestant.getScore() < contestants1.getScore()){
+            if (contestant.getScore() < contestants1.getScore()) {
                 contestants1 = contestant;
             }
         }
@@ -144,7 +145,7 @@ class Examiner implements Serializable{
         System.out.println(contestants1.toString());
     }
 
-    public void addExaminer(){
+    public void addExaminer() {
         System.out.println("Warning: all old accounts will be disappear and replace by this account.");
         String username;
         String password;
@@ -153,14 +154,14 @@ class Examiner implements Serializable{
         username = sc.nextLine();
         System.out.println("Input password:");
         password = sc.nextLine();
-        try{
+        try {
             FileOutputStream fileOutputStream = new FileOutputStream("D:\\Quiz App\\Examiner\\Examiner.txt");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             Examiner examiner = new Examiner(username, password);
             objectOutputStream.writeObject(examiner);
             fileOutputStream.close();
             System.out.println("Create user Admin SUCCESS!");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Can't create File Examiner.txt");
         }
     }
@@ -173,13 +174,13 @@ class Examiner implements Serializable{
 
         FileData fileData = new FileData();
         ArrayList<Examiner> examiners = fileData.readFileExaminer();
-        while (loop){
+        while (loop) {
             System.out.print("Username: ");
             username = sc.nextLine();
             System.out.print("Password: ");
             password = sc.nextLine();
-            for (Examiner examiner: examiners) {
-                if (username.equals(examiner.getUsername()) && password.equals(examiner.password)){
+            for (Examiner examiner : examiners) {
+                if (username.equals(examiner.getUsername()) && password.equals(examiner.password)) {
                     System.out.println("LogIn SUCCESS!");
                     loop = false;
                     break;
@@ -188,7 +189,7 @@ class Examiner implements Serializable{
         }
     }
 
-    public void editFileQuestion(){
+    public void editFileQuestion() {
         FileData fileData = new FileData();
         Question question = new Question();
         Question questionAdd;
@@ -197,80 +198,86 @@ class Examiner implements Serializable{
         byte selection;
         byte number;
         ArrayList<Question> listQuestion = new ArrayList<>();
-        while (true){
-            patchFile = fileData.setPatchFileQuestion(fileData.selectionNameFile());
-            listQuestion = fileData.readFilesQuestion(patchFile);
-            while (true){
-                System.out.println("1. Add Question");
-                System.out.println("2. Delete Question");
-                System.out.println("3. Save");
-                System.out.println("0. Exit");
-                try {
-                    selection = sc.nextByte();
-                }catch (Exception e){
-                    selection = 0;
-                }
-                while (true){
-                    switch (selection){
-                        case 1:
-                            System.out.println("Input number question to add");
-                            while (true){
-                                try {
-                                    number = sc.nextByte();
-                                }catch (Exception e){
-                                    number = 0;
+        patchFile = fileData.setPatchFileQuestion(fileData.selectionNameFile());
+        listQuestion = fileData.readFilesQuestion(patchFile);
 
-                                }
-                                break;
-                            }
-                            for(int i = 0; i < number; i++){
-                                System.out.println("Input Question " + (i + 1) +": ");
-                                questionAdd = question.addQuestion();
-                                listQuestion.add(questionAdd);
-                            }
-                            for (Question q: listQuestion){
-                                System.out.println(q.toString());
-                            }
-                            break;
-                        case 2:
-                            System.out.println("Input index question to delete");
-                            while (true){
-                                try {
-                                    number = sc.nextByte();
-                                    number = (byte) (number - 1);
-                                    if(number < 0){
-                                        break;
-                                    }
-                                }catch (Exception e){
-                                    number = 0;
-
-                                }
-                                listQuestion.remove(number);
-                                break;
-                            }
-                            break;
-                        case 3:
-                            fileData.saveFileQuestion(patchFile, listQuestion);
-                            break;
-                        default:
-                            break;
+        while (true) {
+            System.out.println("1. Add Question");
+            System.out.println("2. Delete Question");
+            System.out.println("3. Save");
+            System.out.println("0. Exit");
+            try {
+                selection = sc.nextByte();
+            } catch (Exception e) {
+                selection = 0;
+            }
+            switch (selection) {
+                case 1:
+                    for (Question q1 : listQuestion) {
+                        System.out.println(q1.toString());
                     }
-                    System.out.println("1. Add Question");
-                    System.out.println("2. Delete Question");
+                    System.out.println("Input number question to add");
+                    while (true) {
+                        try {
+                            number = sc.nextByte();
+                        } catch (Exception e) {
+                            number = 0;
+                            System.out.println("Input again");
+                        }
+                        break;
+                    }
+                    for (int i = 0; i < number; i++) {
+                        System.out.println("Input Question " + (i + 1) + ": ");
+                        questionAdd = question.addQuestion();
+                        listQuestion.add(questionAdd);
+                    }
+                    for (Question q : listQuestion) {
+                        System.out.println(q.toString());
+                    }
+                    break;
+                case 2:
+                    for (Question Q : listQuestion) {
+                        System.out.println(Q.toString());
+                    }
+                    System.out.println("Input index question to delete: ");
+                    while (true) {
+                        try {
+                            number = sc.nextByte();
+                            number = (byte) (number - 1);
+                            if (number < 0) {
+                                break;
+                            }
+                            break;
+                        } catch (Exception e) {
+                            number = 0;
+                            System.out.println("Input invalid exit function!");
+                        }
+                    }
+                    try {
+                        listQuestion.remove(number);
+                        System.out.println("Delete question " + (number + 1) + " SUCCESS!");
+                    } catch (Exception exception) {
+                        System.out.println("Question has not exited");
+                        break;
+                    }
                     System.out.println("3. Save");
                     System.out.println("0. Exit");
                     try {
                         selection = sc.nextByte();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         selection = 0;
                     }
-                    if (selection == 0){
-                        break;
-                    }
-                }
+                    break;
+                case 3:
+                    fileData.saveFileQuestion(patchFile, listQuestion);
+                    System.out.println("Save file SUCCESS!");
+                    break;
+                default:
+                    break;
+            }
+            if (selection == 0) {
                 break;
             }
-
         }
     }
 
